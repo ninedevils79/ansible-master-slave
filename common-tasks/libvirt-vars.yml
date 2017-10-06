@@ -1,0 +1,7 @@
+---
+    
+  libvirt_path: /var/lib/libvirt/images
+  kvm_image: rhel-guest-image-7.2-20160302.0.x86_64.qcow2
+  master_boot_iso: master-init.iso
+  slave_boot_iso: slave-init.iso
+

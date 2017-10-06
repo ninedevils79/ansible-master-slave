@@ -1,0 +1,46 @@
+---
+#Copyright 2016 Kumar Jadav
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+
+- name: Launch the VM's
+  gather_facts: no
+  become: true
+  hosts: localhost
+
+  vars_files: 
+  - common-tasks/libvirt-vars.yml
+
+  tasks:
+
+  - include: common-tasks/libvirt-facts.yml
+
+  - name: Launch the images
+    command: virt-install --name {{ item.name }}
+             --memory 1024
+             --disk {{ item.disk }},device=disk,bus=virtio,format=qcow2
+             --disk {{ item.bootiso }},device=cdrom
+             --import
+             --network default
+             --graphics=vnc
+             --noautoconsole
+             --os-type=linux
+             --os-variant=rhel7
+    with_items:
+    - { name: 'RHEL-Master-Node', disk: '{{ master }}', bootiso: '{{ master_iso }}' } 
+    - { name: 'RHEL-Slave-Node', disk: '{{ slave }}', bootiso: '{{ slave_iso }}' }
+
+  - name: pause for 1 minute
+    pause: minutes=1
+

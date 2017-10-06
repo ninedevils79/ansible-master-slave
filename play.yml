@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook 
+---
+
+# Master playbook
+
+- include: ping.yml
+- include: file-status.yml
+- include: copy.yml
+- include: launch.yml
+- include: getip.yml

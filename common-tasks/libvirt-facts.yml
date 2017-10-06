@@ -1,0 +1,10 @@
+---
+
+- name: Lets set a few facts
+  set_fact:
+    rhel_image: "{{ libvirt_path }}/{{ kvm_image }}"
+    master_iso: "{{ libvirt_path }}/{{ master_boot_iso }}"
+    slave_iso: "{{ libvirt_path }}/{{ slave_boot_iso }}"
+    libvirt_path: "{{ libvirt_path }}"
+    master: "{{ libvirt_path }}/rhel-master-node-7.2.x86_64.qcow2"
+    slave: "{{ libvirt_path }}/rhel-slave-node-7.2.x86_64.qcow2" 
